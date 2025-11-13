@@ -1,5 +1,9 @@
 <template>
-  <button class="shop-button" :style="{ backgroundColor: color }">
+  <button
+    class="shop-button"
+    :style="{ backgroundColor: color }"
+    @click="$emit('shop-click')"
+  >
     {{ label }}
   </button>
 </template>
@@ -7,6 +11,7 @@
 <script lang="ts">
 export default {
   name: 'ButtonCom',
+  emits: ['shop-click'],
   props: {
     label: {
       type: String,
