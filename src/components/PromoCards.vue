@@ -1,43 +1,32 @@
 <template>
-  <div class="promo-card" :style="{ backgroundColor: promotion.backgroundColor }">
+  <div class="promo-card" :style="{ backgroundColor: backgroundColor }">
     <div class="promo-text">
-      <h3>{{ promotion.title }}</h3>
+      <h3>{{ title }}</h3>
       <ButtonCom
-        :label="promotion.buttonLabel"
-        :color="promotion.buttonColor"
+        :label="buttonLabel"
+        :color="buttonColor"
         @shop-click="handleShopClick"
       />
     </div>
-    <img :src="promotion.image" alt="Promotion image" />
+    <img :src="image" alt="Promotion image" />
   </div>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
+<script setup lang="ts">
 import ButtonCom from './ButtonCom.vue'
 
-type Promotion = {
-  image?: string
-  title?: string
+// Define props FIRST
+const props = defineProps<{
+  image: string
+  title: string
   backgroundColor?: string
-  buttonLabel?: string
-  buttonColor?: string
-}
+  buttonLabel: string
+  buttonColor: string
+}>()
 
-export default {
-  name: 'PromoCards',
-  components: { ButtonCom },
-  props: {
-    promotion: {
-      type: Object as PropType<Promotion>,
-      required: true,
-    },
-  },
-  methods: {
-    handleShopClick() {
-      alert(`You clicked: ${this.promotion.title}`)
-    },
-  },
+// Then define methods that use props
+const handleShopClick = () => {
+  alert(`You clicked: ${props.title}`) // Use props.title instead of just title
 }
 </script>
 

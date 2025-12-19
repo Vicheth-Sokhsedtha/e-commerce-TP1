@@ -1,94 +1,62 @@
 <template>
-  <div class="category-list">
-    <div
-      v-for="(cat, index) in categories"
-      :key="index"
-      class="category-item"
-      :style="{ backgroundColor: cat.bg }"
-    >
-      <img :src="cat.image" :alt="cat.name" />
-      <h4>{{ cat.name }}</h4>
-      <p>{{ cat.count }} items</p>
+  <div class="category-card" :style="{ backgroundColor: color }">
+    <div class="category-image">
+      <img :src="image" :alt="name" />
+    </div>
+    <div class="category-info">
+      <h3 class="category-name">{{ name }}</h3>
+      <p class="product-count">{{ productCount }} products</p>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
-
-type Category = {
-  name: string
+<script setup lang="ts">
+defineProps<{
   image: string
-  count: number
-  bg: string
-}
-
-export default {
-  name: 'CategoryList',
-  props: {
-    categories: {
-      type: Array as PropType<Category[]>,
-      required: true,
-    },
-  },
-}
+  name: string
+  productCount: number
+  color?: string
+}>()
 </script>
 
 <style scoped>
-.category-list {
-  display: flex;
-  flex-wrap: nowrap;            /* single row */
-  overflow-x: auto;             /* horizontal scroll */
-  width: 100%;                  /* full width of container */
-  gap: 12px;                    /* space between cards */
-  padding: 10px 0;
-  scroll-behavior: smooth;      /* smooth scroll effect */
-  scrollbar-width: thin;        /* Firefox scrollbar style */
-}
-
-/* For Chrome/Edge scrollbar */
-.category-list::-webkit-scrollbar {
-  height: 8px;
-}
-.category-list::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 4px;
-}
-
-.category-item {
-  flex: 0 0 130px;              /* fixed width for each card */
-  height: 140px;
-  border-radius: 14px;
-  padding: 10px;
+.category-card {
+  width: 200px;
+  padding: 20px;
+  border-radius: 12px;
   text-align: center;
-  color: #333;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.category-item:hover {
-  transform: translateY(-4px);
+.category-card:hover {
+  transform: translateY(-5px);
 }
 
-.category-item img {
-  width: 60px;
-  height: 60px;
+.category-image {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
-.category-item h4 {
-  margin: 8px 0 2px;
-  font-size: 0.9rem;
+.category-name {
+  font-size: 16px;
   font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
 }
 
-.category-item p {
+.product-count {
+  font-size: 14px;
   color: #666;
-  font-size: 0.8rem;
+  margin: 0;
 }
 </style>

@@ -1,6 +1,7 @@
+<!-- ButtonCom.vue -->
 <template>
-  <button
-    class="shop-button"
+  <button 
+    class="button" 
     :style="{ backgroundColor: color }"
     @click="$emit('shop-click')"
   >
@@ -8,36 +9,29 @@
   </button>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'ButtonCom',
-  emits: ['shop-click'],
-  props: {
-    label: {
-      type: String,
-      default: 'Shop Now',
-    },
-    color: {
-      type: String,
-      default: '#4CAF50',
-    },
-  },
-}
+<script setup lang="ts">
+defineProps<{
+  label: string
+  color?: string
+}>()
+
+defineEmits<{
+  'shop-click': []
+}>()
 </script>
 
 <style scoped>
-.shop-button {
-  color: white;
-  border: none;
+.button {
   padding: 10px 20px;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 
-.shop-button:hover {
+.button:hover {
   opacity: 0.9;
-  transform: translateY(-2px);
 }
 </style>
