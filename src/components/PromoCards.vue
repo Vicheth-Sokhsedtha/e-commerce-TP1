@@ -1,32 +1,42 @@
 <template>
-  <div class="promo-card" :style="{ backgroundColor: backgroundColor }">
+  <div class="promo-card" :style="{ backgroundColor: promotion.color }">
     <div class="promo-text">
-      <h3>{{ title }}</h3>
+      <h3>{{ promotion.title }}</h3>
       <ButtonCom
-        :label="buttonLabel"
-        :color="buttonColor"
+        :label="promotion.buttonText"
+        :color="promotion.buttonColor"
         @shop-click="handleShopClick"
       />
     </div>
-    <img :src="image" alt="Promotion image" />
+    <img :src="getImageUrl(promotion.image)" alt="Promotion image" />
   </div>
 </template>
 
 <script setup lang="ts">
 import ButtonCom from './ButtonCom.vue'
 
-// Define props FIRST
 const props = defineProps<{
-  image: string
-  title: string
-  backgroundColor?: string
-  buttonLabel: string
-  buttonColor: string
+  promotion: {
+    image: string
+    title: string
+    color?: string
+    buttonText: string
+    buttonColor: string
+  }
 }>()
 
-// Then define methods that use props
+const emit = defineEmits<{
+  'shop-click': []
+}>()
+
+const getImageUrl = (imagePath: string | undefined) => {
+  if (!imagePath) return 'https://via.placeholder.com/300x200?text=No+Image'
+  if (imagePath.startsWith('http')) return imagePath
+  return `http://localhost:3000${imagePath.startsWith('/') ? '' : '/'}${imagePath}`
+}
+
 const handleShopClick = () => {
-  alert(`You clicked: ${props.title}`) // Use props.title instead of just title
+  emit('shop-click')
 }
 </script>
 

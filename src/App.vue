@@ -18,15 +18,18 @@
     </section>
 
     <!-- Promotions Section -->
-    <section class="promo-list">
+    <<section class="promo-list">
       <PromoCards
         v-for="(promo, index) in promotions"
         :key="promo.id || index"
-        :title="promo.title"
-        :image="getImageUrl(promo.image)"
-        :buttonLabel="promo.buttonText"
-        :buttonColor="promo.buttonColor"
-        :backgroundColor="promo.color"
+        :promotion="{
+          image: getImageUrl(promo.image),
+          title: promo.title,
+          color: promo.color,
+          buttonText: promo.buttonText,
+          buttonColor: promo.buttonColor
+        }"
+        @shop-click="handlePromoClick(promo)"
       />
     </section>
 
@@ -84,6 +87,11 @@ const getImageUrl = (imagePath: string | undefined) => {
     return imagePath
   }
   return `${API_BASE_URL}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`
+}
+// Handler function
+const handlePromoClick = (promo: Promotion) => {
+  console.log('Promo clicked:', promo)
+
 }
 
 const fetchCategories = async () => {
