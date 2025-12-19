@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="app">
     <HomePage />
   </div>
@@ -17,4 +17,18 @@ body {
   margin: 0;
   background-color: #fff;
 }
-</style>
+</style> -->
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useProductStore } from './stores/products'
+
+const productStore = useProductStore()
+
+onMounted(() => {
+  productStore.loadAll();
+})
+</script>
+
+<template>
+  <router-view />
+</template>
